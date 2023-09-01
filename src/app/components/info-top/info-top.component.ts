@@ -14,7 +14,7 @@ export class InfoTopComponent implements OnInit {
 
   private generate(): void {
     const el = this.elementRef.nativeElement.querySelector('.info-top');
-    const svg = select(el).append('svg').attr('width', '100%').attr('height', '100%');
+    const svg = select(el).append('svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 740 80');
     const g = svg.append('g');
 
     // bottom line

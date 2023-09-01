@@ -7,6 +7,7 @@ import { InfoMapComponent } from './components/info-map/info-map.component';
 import { InfoTopComponent } from './components/info-top/info-top.component';
 import { RpmGaugeComponent } from './components/rpm-gauge/rpm-gauge.component';
 import { SpeedGaugeComponent } from './components/speed-gauge/speed-gauge.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -16,9 +17,9 @@ import { SpeedGaugeComponent } from './components/speed-gauge/speed-gauge.compon
     InfoMapComponent,
     InfoTopComponent,
     RpmGaugeComponent,
-    SpeedGaugeComponent
+    SpeedGaugeComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, GoogleMapsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

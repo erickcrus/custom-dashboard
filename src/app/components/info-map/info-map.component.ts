@@ -14,7 +14,7 @@ export class InfoMapComponent implements OnInit {
 
   private generate(): void {
     const el = this.elementRef.nativeElement.querySelector('.info-map');
-    const svg = select(el).append('svg').attr('width', '100%').attr('height', '100%');
+    const svg = select(el).append('svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 920 500');
     const g = svg.append('g');
 
     // map text
@@ -28,8 +28,8 @@ export class InfoMapComponent implements OnInit {
     // map marker
     g.append('image')
       .attr('xlink:href', '/assets/images/map-marker.svg')
-      .attr('x', '165px')
-      .attr('y', '130px')
+      .attr('x', '460px')
+      .attr('y', '250px')
       .attr('width', '25px')
       .attr('height', '25px');
   }

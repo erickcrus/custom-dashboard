@@ -29,7 +29,7 @@ export class SpeedGaugeComponent implements OnInit, OnChanges {
 
   private generate(): void {
     const el = this.elementRef.nativeElement.querySelector('.speed-gauge');
-    const svg = select(el).append('svg').attr('width', '100%').attr('height', '100%');
+    const svg = select(el).append('svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 400 400');
     const g = svg.append('g').attr('transform', `translate(200, 200)`);
     const colors = ['#D1D1D1', '#AFAFAF', '#FFFFFF', '#FD3104', '#171717', '#0A0A0A'];
     const ticksData = [

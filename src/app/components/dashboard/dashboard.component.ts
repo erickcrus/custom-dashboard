@@ -1,25 +1,32 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { filter, fromEvent, interval, Subscription, tap, timeInterval } from 'rxjs';
 import { DEFAULT_REFRESH_RATE } from '../../shared/const';
+import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 @Component({
   selector: 'app-dashboard',
   template: `
-    <div class="dashboard">
-      <div class="dashboard-body">
         <div class="container">
-          <app-info-top></app-info-top>
-          <img src="/assets/images/map.png" class="map" />
-          <app-info-map></app-info-map>
-          <app-info-bottom></app-info-bottom>
-          <app-rpm-gauge [value]="rpm"></app-rpm-gauge>
-          <app-speed-gauge [value]="speed"></app-speed-gauge>
+          <div class="central-container" style="order:1">
+            <google-map width="1420px"
+              height="410px"
+              [zoom]="zoom"
+              [center]="center">
+            </google-map>
+            <app-info-top></app-info-top>
+            <app-info-map></app-info-map>
+            <app-info-bottom></app-info-bottom>
+          </div>
+          <app-rpm-gauge style="order:0" [value]="rpm"></app-rpm-gauge>
+          <app-speed-gauge style="order:2" [value]="speed"></app-speed-gauge>
         </div>
-      </div>
-    </div>
   `
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  @ViewChild(GoogleMap, { static: false })
+  map!: GoogleMap;
+  @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
+
   sub = new Subscription();
   acc = false;
   rpm = 0;
@@ -59,6 +66,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
       keyUp$.subscribe(),
       interval$.subscribe()
     ]);
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+    });
+  }
+  
+  display: any;
+  zoom = 17;
+  center: google.maps.LatLngLiteral = { lat: -23.6238370230242, lng: -46.69526979053957 };
+  infoContent = '';
+
+  moveMap(event:google.maps.MapMouseEvent){
+    if(event.latLng != null) this.center = (event.latLng.toJSON());
+  }
+
+  move(event:google.maps.MapMouseEvent){
+    if(event.latLng != null) this.display = (event.latLng.toJSON());
+  }
+
+  openInfo(marker: MapMarker, content: string) {
+    this.infoContent = content;
+    this.info.open(marker);
+  }
+
+  logCenter() {
+    console.log('deuidhiweu:', JSON.stringify(this.map.getCenter()))
   }
 
   ngOnDestroy(): void {
