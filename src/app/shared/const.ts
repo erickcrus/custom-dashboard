@@ -1,1 +1,1 @@
-export const DEFAULT_REFRESH_RATE = 10;
+export const DEFAULT_REFRESH_RATE = 60;

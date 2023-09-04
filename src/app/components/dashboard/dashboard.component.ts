@@ -7,15 +7,18 @@ import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
   selector: 'app-dashboard',
   template: `
         <div class="container">
-          <div class="central-container" style="order:1">
-            <google-map width="1420px"
-              height="410px"
-              [zoom]="zoom"
-              [center]="center">
-            </google-map>
+          <div class="central-container" style="order:1;flex-direction: column;">
+            <div class="map">
+              <google-map width="1420px"
+                height="410px"
+                [options]="mapOptions" >
+                <map-marker [position]="marker.position"></map-marker>
+              </google-map>
+            </div>
             <app-info-top></app-info-top>
             <app-info-map></app-info-map>
-            <app-info-bottom></app-info-bottom>
+            <app-info-bottom [value]="totalKm"
+              [fuel]="fuelLevel"></app-info-bottom>
           </div>
           <app-rpm-gauge style="order:0" [value]="rpm"></app-rpm-gauge>
           <app-speed-gauge style="order:2" [value]="speed"></app-speed-gauge>
@@ -26,11 +29,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild(GoogleMap, { static: false })
   map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
+  @ViewChild(MapMarker, { static: false }) myMarker!: MapMarker;
 
   sub = new Subscription();
   acc = false;
   rpm = 0;
   speed = 0;
+  totalKm = 0;
+  fuelLevel = 3;
 
   constructor() { }
 
@@ -53,10 +59,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         tap(() => {
           if (this.acc) {
             this.speed = this.speed < 300 ? this.speed += 1 : this.speed;
-            this.rpm = this.rpm < 6000 ? this.rpm += 50 : this.rpm;
+            this.rpm = this.rpm < 6000 ? this.rpm += 200 : this.rpm;
           } else {
             this.speed = this.speed > 0 ? this.speed -= 1 : this.speed;
-            this.rpm = this.rpm > 0 ? this.rpm -= 50 : this.rpm;
+            this.rpm = this.rpm > 0 ? this.rpm -= 100 : this.rpm;
           }
         })
       );
@@ -68,20 +74,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ]);
 
     navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
+      const c = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       };
+      this.myMarker?.marker?.setPosition(c);
+      this.mapOptions.center = c;
     });
   }
-  
+
+
+  mapOptions: google.maps.MapOptions = {
+    center: { lat: -23.6238370230242, lng: -46.69526979053957 },
+    zoom: 17,
+    disableDefaultUI: true,
+  }
+
   display: any;
-  zoom = 17;
-  center: google.maps.LatLngLiteral = { lat: -23.6238370230242, lng: -46.69526979053957 };
   infoContent = '';
+  marker = {
+    position: { lat: -23.6238370230242, lng: -46.69526979053957 },
+  }
 
   moveMap(event:google.maps.MapMouseEvent){
-    if(event.latLng != null) this.center = (event.latLng.toJSON());
+    if(event.latLng != null) this.mapOptions.center = (event.latLng.toJSON());
   }
 
   move(event:google.maps.MapMouseEvent){

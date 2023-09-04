@@ -166,7 +166,7 @@ export class RpmGaugeComponent implements OnInit, OnChanges {
 
     // big text in center
     tg.append('text')
-      .text('D3')
+      .text('N')
       .attr('font-size', '80')
       .attr('text-anchor', 'middle')
       .attr('fill', colors[2])

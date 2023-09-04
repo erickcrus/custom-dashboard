@@ -26,11 +26,11 @@ export class InfoMapComponent implements OnInit {
       .attr('height', '50px');
 
     // map marker
-    g.append('image')
+    /* g.append('image')
       .attr('xlink:href', '/assets/images/map-marker.svg')
       .attr('x', '460px')
       .attr('y', '250px')
       .attr('width', '25px')
-      .attr('height', '25px');
+      .attr('height', '25px'); */
   }
 }
