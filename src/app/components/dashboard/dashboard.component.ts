@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { filter, fromEvent, interval, startWith, Subscription, tap, timeInterval } from 'rxjs';
+import { fromEvent, interval, startWith, Subscription, tap, timeInterval } from 'rxjs';
 import { DEFAULT_REFRESH_RATE } from '../../shared/const';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 
@@ -26,8 +26,7 @@ import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
   `
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  @ViewChild(GoogleMap, { static: false })
-  map!: GoogleMap;
+  @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
   @ViewChild(MapMarker, { static: false }) myMarker!: MapMarker;
 
@@ -58,11 +57,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         timeInterval(),
         tap(() => {
           if (this.acc) {
-            this.speed = this.speed < 300 ? this.speed += 1 : this.speed;
-            this.rpm = this.rpm < 6000 ? this.rpm += 200 : this.rpm;
+            this.speed = this.speed < 300 ? this.speed += 20 : this.speed;
+            this.rpm = this.rpm < 6000 ? this.rpm += 400 : this.rpm;
           } else {
-            this.speed = this.speed > 0 ? this.speed -= 1 : this.speed;
-            this.rpm = this.rpm > 0 ? this.rpm -= 100 : this.rpm;
+            this.speed = this.speed > 0 ? this.speed -= 10 : this.speed;
+            this.rpm = this.rpm > 0 ? this.rpm -= 200 : this.rpm;
           }
         })
       );
