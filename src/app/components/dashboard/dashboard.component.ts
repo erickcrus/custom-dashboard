@@ -9,7 +9,7 @@ import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
         <div class="container">
           <div class="central-container" style="order:1;flex-direction: column;">
             <div class="map">
-              <google-map width="1420px"
+              <google-map width="1380px"
                 height="410px"
                 [options]="mapOptions" >
                 <map-marker [position]="marker.position"></map-marker>
