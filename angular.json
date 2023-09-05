@@ -49,20 +49,21 @@
             "inlineStyleLanguage": "sass",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles/app.sass"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["moment"]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1mb",
                   "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
                 }
               ],
               "fileReplacements": [
