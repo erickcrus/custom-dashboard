@@ -22,7 +22,7 @@
   "homepage": "https://github.com/erickcrus/custom-dashboard",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 45100 --open",
+    "start": "ng serve --port 45100",
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development"
   },
