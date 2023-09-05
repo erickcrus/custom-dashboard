@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { select } from 'd3';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-info-bottom',
@@ -26,7 +27,7 @@ export class InfoBottomComponent implements OnInit {
 
     // trip km text
     g.append('text')
-      .text('Trip: 478.0km')
+      .text('Cons: 9,2 km/l')
       .attr('x', '90px')
       .attr('y', '40px')
       .attr('font-size', '18')
@@ -44,7 +45,7 @@ export class InfoBottomComponent implements OnInit {
     // hour
     const date = new Date();
     g.append('text')
-      .text( date.getDate()+'/'+date.getMonth()+' '+date.getHours()+':'+date.getMinutes())
+      .text( moment(date).format('DD/MM HH:mm') )
       .attr('x', '230px')
       .attr('y', '40px')
       .attr('font-size', '18')
@@ -78,7 +79,7 @@ export class InfoBottomComponent implements OnInit {
 
     // iPhone text
     g.append('text')
-      .text('iPhone')
+      .text('Erick Crus')
       .attr('x', '120px')
       .attr('y', '100px')
       .attr('font-size', '16')
@@ -88,19 +89,27 @@ export class InfoBottomComponent implements OnInit {
     // musical note
     g.append('image')
       .attr('xlink:href', '/assets/images/musical-note.svg')
-      .attr('x', '170px')
+      .attr('x', '190px')
       .attr('y', '80px')
       .attr('width', '25px')
       .attr('height', '25px');
 
     // Song text
     g.append('text')
-      .text('Wu-Tang Clan - Triumph')
       .attr('x', '285px')
-      .attr('y', '97px')
+      .attr('y', '90px')
+      .attr('textLength', '180px')
+      .attr('lengthAdjust', 'spacing')
       .attr('font-size', '12')
       .attr('text-anchor', 'middle')
-      .attr('fill', '#FFFFFF');
+      .attr('fill', '#FFFFFF')
+        .append('tspan')
+        .attr('x', '300')
+        .text('Bezerra da Silva')
+        .append('tspan')
+        .attr('dy', '15px')
+        .attr('x', '300')
+        .text('Se Leonardo da Vinte');
 
     const fuelGauge = this.elementRef.nativeElement.querySelector('.right-bottom');
     const fuelSvg = select(fuelGauge).append('svg').attr('width', '225px').attr('height', '40px');
