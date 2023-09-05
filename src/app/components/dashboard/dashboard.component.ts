@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { filter, fromEvent, interval, Subscription, tap, timeInterval } from 'rxjs';
+import { filter, fromEvent, interval, startWith, Subscription, tap, timeInterval } from 'rxjs';
 import { DEFAULT_REFRESH_RATE } from '../../shared/const';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 
@@ -41,15 +41,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit(): void {
-    const keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown')
+    const mouseDown$ = fromEvent<MouseEvent>(document, 'mousedown')
       .pipe(
-        filter((e: KeyboardEvent) => e.key === 'ArrowUp'),
+        startWith('initial'),
         tap(() => this.acc = true)
       );
 
-    const keyUp$ = fromEvent<KeyboardEvent>(document, 'keyup')
+    const mouseUp$ = fromEvent<MouseEvent>(document, 'mouseup')
       .pipe(
-        filter((e: KeyboardEvent) => e.key === 'ArrowUp'),
+        startWith('initial'),
         tap(() => this.acc = false)
       );
 
@@ -68,8 +68,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       );
 
     this.sub.add(...[
-      keyDown$.subscribe(),
-      keyUp$.subscribe(),
+      mouseDown$.subscribe(),
+      mouseUp$.subscribe(),
       interval$.subscribe()
     ]);
 
